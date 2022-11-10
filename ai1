@@ -1,0 +1,182 @@
+from queue import PriorityQueue
+
+# graph = {
+#     '5': ['3', '7'],
+#     '3': ['2', '4'],
+#     '7': ['8'],
+#     '2': [],
+#     '4': ['8'],
+#     '8': []
+# }
+
+# visited = []
+# queue = []
+
+# def bfs(visited, graph, node):
+#     visited.append(node)
+#     queue.append(node)
+    
+#     while queue:
+#         m = queue.pop(0)
+#         print(m, end=" ")
+        
+#         for children in graph[m]:
+#             if children not in visited:
+#                 visited.append(children)
+#                 queue.append(children)
+
+
+# bfs(visited, graph, '5')
+
+# print()
+# print('Visited: ', visited)
+# print('Queue: ', queue)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# graph = {
+#     '5': ['3', '7'],
+#     '3': ['2', '4'],
+#     '7': ['8'],
+#     '2': [],
+#     '4': ['8'],
+#     '8': []
+# }
+
+
+# visited = []
+
+# def dfs(visited, graph, node):
+#     if node not in visited:
+#         print(node)
+#         visited.append(node)
+#         for children in graph[node]:
+#             dfs(visited, graph, children)
+# dfs(visited, graph, '5')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# v=14
+# graph = [[] for i in range(v)]
+
+# def A_Algorithm(source, target, v):
+#     pq = PriorityQueue()
+#     pq.put((0, source))
+#     while pq.empty() == False:
+#         u = pq.get()[1]
+#         print(u, end="")
+#         if u == target:
+#             print()
+#             break
+#         for y, cost, l in graph[u]:
+#             pq.put((cost + 1, y))
+    
+# def addedge(p, nd, cost, h, l):
+#     cost = h + l
+#     print(cost)
+#     graph[p].append((nd, cost, h))
+    
+
+# addedge(0, 7, 3, 9, 0)
+# addedge(0, 9, 2, 5, 0)
+# addedge(9, 8, 4, 2, 1)
+# addedge(9, 6, 3, 3, 1)
+# addedge(7, 4, 6, 1, 1)
+# addedge(7, 5, 8, 0, 1)
+
+# source = 0
+# target = 3
+# A_Algorithm(source, target, v)
+
+
+
+
+
+
+
+
+
+
+
+
+
+graph = [[] for i in range(14)]
+
+def best_first_search(source, target):
+    pq = PriorityQueue()
+    pq.put((0, source))
+   
+    while pq.empty() == False:
+        u = pq.get()[1]
+        print(u, end = '->')
+        
+        if u == target: 
+            break
+        
+        for value, cost, act_cost in graph[u]:
+            pq.put((act_cost, value))
+    
+    print()
+    
+    
+def addedge(p, node, cost, heurstic, level):
+    graph[p].append((p, node, heurstic, level))
+
+
+addedge(0, 1, 5, 7, 1)
+addedge(0, 2, 6, 9, 1)
+addedge(0, 3, 4, 5, 1)
+addedge(3, 7, 2, 5, 2)
+addedge(3, 8, 1, 6, 2)
+addedge(1, 4, 1, 0, 2)
+addedge(1, 5, 3, 2, 2)
+
+source = 0
+target = 4
+
+# best_first_search(source, target)
+
+total = 0
+
+def getCost(node, total):
+    for i in graph:
+        for j in i:
+            if(j[1] == node):
+                if j[1] == 0:
+                    return
+                else:
+                    total += j[2]
+                    return getCost(j[0], total)               
+    return total
+
+
+print(getCost(8, total))
